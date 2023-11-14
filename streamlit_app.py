@@ -2,7 +2,7 @@ import streamlit
 import pandas
 
 # Set the page title
-streamlit.set_page_config(page_title='Healthy Dinner')
+streamlit.title('Healthy Dinner')
 
 streamlit.header('Breakfast Menu')
 streamlit.text('🥣Omega 3 & Blueberry Oatmeal')
