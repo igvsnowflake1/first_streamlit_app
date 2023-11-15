@@ -54,3 +54,4 @@ if new_fruit:
     my_data_row_list.append(new_fruit)
     # Convert the list back to a tuple
     my_data_row = tuple(my_data_row_list)
+    streamlit.dataframe(my_data_row_list)
