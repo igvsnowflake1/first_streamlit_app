@@ -35,6 +35,14 @@ streamlit.dataframe(fruityvice_normalized)
 
 import snowflake.connector
 
+
+
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+my_cur = my_cnx.cursor()
+my_cur.execute("SELECT * from fruit_load_list")
+my_data_row = my_cur.fetchone()
+streamlit.header("The fruit load list contains:")
+
 streamlit.header("Añadir una Nueva Fruta")
 
 new_fruit = streamlit.text_input('Introduce una nueva fruta:')
@@ -46,11 +54,3 @@ if new_fruit:
     my_data_row_list.append(new_fruit)
     # Convert the list back to a tuple
     my_data_row = tuple(my_data_row_list)
-
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT * from fruit_load_list")
-my_data_row = my_cur.fetchone()
-streamlit.header("The fruit load list contains:")
-my_data_row = tuple(my_data_row_list)
-
