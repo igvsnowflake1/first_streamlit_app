@@ -53,4 +53,4 @@ if new_fruit:
     my_data_row = tuple(my_data_row_list)
 
 streamlit.header("The fruit load list contains:")
-streamlit.dataframe(my_data_row_list)
+streamlit.dataframe(my_data_row)
