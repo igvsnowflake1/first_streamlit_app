@@ -22,14 +22,6 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 # Display the table on the page.
 streamlit.dataframe(fruits_to_show)
 
-st.header("Add a New Fruit")
-
-new_fruit = st.text_input('Enter a new fruit:')
-if new_fruit:
-    st.write('You entered:', new_fruit)
-    # Perform any desired operations with the new fruit, such as adding it to the database.
-
-
 streamlit.header("Fruityvice Fruit Advice!")
 
 fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
