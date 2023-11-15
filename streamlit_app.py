@@ -41,3 +41,14 @@ my_cur.execute("SELECT * from fruit_load_list")
 my_data_row = my_cur.fetchone()
 streamlit.header("The fruit load list contains:")
 streamlit.dataframe(my_data_row)
+
+streamlit.header("Añadir una Nueva Fruta")
+
+new_fruit = streamlit.text_input('Introduce una nueva fruta:')
+if new_fruit:
+    streamlit.write('Has introducido:', new_fruit)
+    # Aquí es donde añadirías la nueva fruta a my_data_row. 
+    # Esto dependerá de cómo esté estructurado my_data_row.
+    # Por ejemplo, si my_data_row es una lista, podrías hacer:
+    my_data_row.append(new_fruit)
+    streamlit.dataframe(my_data_row)
