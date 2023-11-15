@@ -1,8 +1,7 @@
 import streamlit
-#import pandas as pd
+import pandas as pd
 import requests
 import snowflake.connector
-from urllib.error import URLError
 
 # Set the page title
 streamlit.set_page_config(page_title='Healthy Dinner')
@@ -27,35 +26,36 @@ streamlit.dataframe(fruits_to_show)
 
 streamlit.header("Fruityvice Fruit Advice!")
 
-fruit_choice = streamlit.text_input('What fruit would you like information about?')
-streamlit.write('The user entered', fruit_choice)
+fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+streamlit.write('The user entered ', fruit_choice)
 
-
+import requests
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
 
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json()) 
 streamlit.dataframe(fruityvice_normalized)
 
-
+import snowflake.connector
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
+
+# Execute a query on the fruit load list
 my_cur.execute("SELECT * from fruit_load_list")
-my_data_row = my_cur.fetchall()
+
+# Fetch all rows from the result set
+my_data_rows = my_cur.fetchall()
 
 streamlit.header("Añadir una Nueva Fruta")
 
 new_fruit = streamlit.text_input('Introduce una nueva fruta:')
 if new_fruit:
     streamlit.write('Has introducido:', new_fruit)
-    # Convert the tuple to a list
-    my_data_row_list = list(my_data_row)
-    # Add the new fruit
-    my_data_row_list.append(new_fruit)
-    # Convert the list back to a tuple
-    my_data_row = tuple(my_data_row_list)
+    # Insert the new fruit into the database
+    my_cur.execute("INSERT INTO fruit_load_list (fruit_name) VALUES (%s)", (new_fruit,))
+    # Commit the transaction to persist changes
+    my_cnx.commit()
 
 streamlit.header("The fruit load list contains:")
-streamlit.dataframe(my_data_row)
-
-
+# Display all rows from the result set
+streamlit.dataframe(my_data_rows)
