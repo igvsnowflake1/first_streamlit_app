@@ -42,15 +42,15 @@ my_data_row = my_cur.fetchone()
 streamlit.header("The fruit load list contains:")
 streamlit.dataframe(my_data_row)
 
-st.header("Añadir una Nueva Fruta")
+streamlit.header("Añadir una Nueva Fruta")
 
-new_fruit = st.text_input('Introduce una nueva fruta:')
+new_fruit = streamlit.text_input('Introduce una nueva fruta:')
 if new_fruit:
-    st.write('Has introducido:', new_fruit)
+    streamlit.write('Has introducido:', new_fruit)
     # Convert the tuple to a list
     my_data_row_list = list(my_data_row)
     # Add the new fruit
     my_data_row_list.append(new_fruit)
     # Convert the list back to a tuple
     my_data_row = tuple(my_data_row_list)
-    st.dataframe(my_data_row)
+    streamlit.dataframe(my_data_row)
